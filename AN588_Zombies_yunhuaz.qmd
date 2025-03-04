@@ -1,0 +1,161 @@
+---
+title: "yunhuaz_OriginalHomeworkCode_03"
+format: html
+editor: visual
+---
+
+## Set Up
+
+```{r}
+library(ggplot2)
+library(tidyr)
+library(gridExtra)
+setwd("C:/Users/yunhu/Documents/BI588/AN588_Zombies_yunhuaz")
+zombies <- read.csv("zombies.csv")
+
+
+```
+
+## Calculate the *population* mean and standard deviation for each quantitative random variable (height, weight, age, number of zombies killed, and years of education). NOTE: You will not want to use the built in `var()` and `sd()` commands as these are for *samples*.
+
+```{r}
+#Calculating pop mean 
+pop_mean <- function(x) {
+  sum(x)/length(x)
+}
+
+#Calculating pop sd
+pop_sd <- function(x) {
+  sqrt(sum((x - pop_mean(x))^2) / length(x))
+}
+
+#Quantative Variables
+quant_vari <- c("height", "weight", "age", "zombies_killed", "years_of_education")
+
+#Empty Vectors for population mean and sd
+pop_means <- c()
+pop_sds <- c()
+
+#For loop to interate through each quantative variable and outputs are filled into the empty vectors
+for (var in quant_vari) {
+  pop_means <- append(pop_means, pop_mean(zombies[var]))
+  pop_sds <- append(pop_sds, pop_sd(zombies[var]))
+}
+
+#Creating a dataframe with each variable name and their corresponding means and sd
+quant_df <- data.frame(Name = quant_vari, 
+                       Population_Means = pop_means,
+                       Population_SD = pop_sds)
+quant_df
+```
+
+## Use {ggplot} to make boxplots of each of these variables by gender
+
+```{r}
+#Height Boxplot
+height_bp <- ggplot(zombies, aes(x = gender, y = height, fill = gender)) +
+  geom_boxplot() +
+  ggtitle("Height Boxplot") +
+  theme(legend.position = "none")
+
+#Weight Boxplot
+weight_bp <- ggplot(zombies, aes(x = gender, y = weight, fill = gender)) +
+  geom_boxplot() +
+  ggtitle("Weight Boxplot") +
+  theme(legend.position = "none")
+
+#Age Boxplot
+age_bp <- ggplot(zombies, aes(x = gender, y = age, fill = gender)) +
+  geom_boxplot() +
+  ggtitle("Age Boxplot") +
+  theme(legend.position = "none")
+
+#Zombies Killed Boxplot
+zombieskilled_bp <- ggplot(zombies, 
+                           aes(x = gender, y = zombies_killed, fill = gender)) +
+  geom_boxplot() +
+  ggtitle("Zombies Killed Boxplot") +
+  theme(legend.position = "none")
+  
+#Years_of_Education Boxplot
+yearsedu_bp <- ggplot(zombies,
+                      aes(x = gender, y = years_of_education, fill = gender)) +
+  geom_boxplot() +
+  ggtitle("Years of Education Boxplot") +
+  theme(legend.position = "none")
+  
+#Putting the boxplot into one frame
+grid.arrange(height_bp, weight_bp, age_bp, zombieskilled_bp, yearsedu_bp, nrow = 2)
+```
+
+## Use {ggplot} to make scatterplots of height and weight in relation to age. Do these variables seem to be related? In what way?
+
+```{r}
+#Height Scatterplot
+s1 <- ggplot(zombies, aes(x = height, y = age)) +
+  geom_point()
+s2 <- ggplot(zombies, aes(x = weight, y = age)) +
+  geom_point()
+
+grid.arrange(s1,s2, nrow = 2)
+```
+
+## Using histograms and Q-Q plots, check whether the quantitative variables seem to be drawn from a normal distribution. Which seem to be and which do not (hint: not all are drawn from the normal distribution)? For those that are not normal, can you determine from which common distribution they are drawn?
+
+```{r}
+#For loop to create histograms
+for (var in quant_vari) {
+  hist(as.vector(zombies[,var]), 
+       main = var,
+       xlab = var)
+}
+
+```
+
+```{r}
+#For Loop to create qqplots
+for (var in quant_vari) {
+  qqnorm(as.vector(zombies[[var]]), main = paste("QQ plot for", var))
+  qqline(as.vector(zombies[[var]]))
+}
+
+```
+
+## Now use the `sample()` function to sample ONE subset of 30 zombie survivors (without replacement) from this population and calculate the mean and sample standard deviation for each variable. Also estimate the standard error for each variable, and construct the 95% confidence interval for each mean. Note that for the variables that are not drawn from the normal distribution, you may need to base your estimate of the CIs on slightly different code than for the normal…
+
+```{r}
+#Sampling 30 zombie survivors
+x <- zombies[which(zombies$id %in% sample(zombies$id, 30)),]
+
+#Mean of the 30 sampled zombie survivor
+samp_mean <- c()
+for (var in quant_vari) {
+  samp_mean <- append(samp_mean, mean(x[,var]))
+  
+}
+
+#Standard Deviation for the variables
+
+
+#Standard Error for the variables that are normally distributed
+norm <- c("height", "weight", "age")
+a <- c()
+for (var in norm) {
+  a <- append(a, sd(x[,var])/sqrt(length(x[,var])))
+}
+
+#Standard Error for variables that are not normally distributed
+notnorm <- c("zombies_killed","years_of_education")
+b <- c()
+for (var in norm) {
+  b <- append(b, )
+}
+
+#Still working on it
+```
+
+## Now draw 99 more random samples of 30 zombie apocalypse survivors, and calculate the mean for each variable for each of these samples. Together with the first sample you drew, you now have a set of 100 means for each variable (each based on 30 observations), which constitutes a *sampling* distribution for each variable. What are the means and standard deviations of this distribution of means for each variable? How do the standard deviations of means compare to the standard errors estimated in \[5\]? What do these sampling distributions look like (a graph might help here)? Are they normally distributed? What about for those variables that you concluded were *not* originally drawn from a normal distribution?
+
+```{r}
+#Not too sure
+```
