@@ -1,8 +1,17 @@
 ---
-title: "yunhuaz_OriginalHomeworkCode_03"
-format: html
-editor: visual
+title: "yunhuaz_FinalHomeworkCode_03"
+output:
+  rmdformats::readthedown:
+    toc_depth: 2         
+    number_sections: true
+    self_contained: true
+editor_options:
+  chunk_output_type: inline
 ---
+
+## Favorite Zombie Image
+
+![](http://www.elainafinklestein.com/wp-content/uploads/2018/02/giphy-17.gif){fig-align="center" width="300"}
 
 ## Set Up
 
@@ -208,7 +217,7 @@ summary_df <- data.frame(
 summary_df
 ```
 
-## Now draw 99 more random samples of 30 zombie apocalypse survivors, and calculate the mean for each variable for each of these samples. Together with the first sample you drew, you now have a set of 100 means for each variable (each based on 30 observations), which constitutes a *sampling* distribution for each variable. What are the means and standard deviations of this distribution of means for each variable? How do the standard deviations of means compare to the standard errors estimated in \[5\]? What do these sampling distributions look like (a graph might help here)? Are they normally distributed? What about for those variables that you concluded were *not* originally drawn from a normal distribution?
+## Now draw 99 more random samples of 30 zombie apocalypse survivors, and calculate the mean for each variable for each of these samples. Together with the first sample you drew, you now have a set of 100 means for each variable (each based on 30 observations), which constitutes a *sampling* distribution for each variable. What are the means and standard deviations of this distribution of means for each variable? How do the standard deviations of means compare to the standard errors estimated in 5? What do these sampling distributions look like (a graph might help here)? Are they normally distributed? What about for those variables that you concluded were *not* originally drawn from a normal distribution?
 
 ```{r}
 # Set up
@@ -251,6 +260,6 @@ for (var in all_vars) {
 
 ```
 
-Comparing the standard errors estimates in Problem \[5\] to the standard deviation of the sample distributions, these numbers are very similar. The two variables that had some differences weight height and weight (0.68 vs 0.81, 2.96 vs 3.48). This supports the accuracy of our original SE estimates and the differences in height and weight could be due to sampling variability.
+Comparing the standard errors estimates in Problem 5 to the standard deviation of the sample distributions, these numbers are very similar. The two variables that had some differences weight height and weight (0.68 vs 0.81, 2.96 vs 3.48). This supports the accuracy of our original SE estimates and the differences in height and weight could be due to sampling variability.
 
 I made a histogram to see the normality of the data for all variables look more normal now compared to before. This result is consistent with the Central Limit Theorem, which states that the sampling distribution of the sample mean approaches normality as the sample size increases.
